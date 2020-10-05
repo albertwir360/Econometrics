@@ -1,0 +1,148 @@
+---
+title: "Econ_471_Problem_set_1"
+author: "AlbertWiryawan"
+date: "9/28/2020"
+output: pdf_document
+---
+
+
+4. Use the data in ATTEND.TXT for this exercise.
+(i) Obtain the minimum, maximum, and average values for the variables
+𝑎𝑡𝑛𝑑𝑟𝑡𝑒, 𝑝𝑟𝑖𝐺𝑃𝐴, and 𝐴𝐶𝑇, where 𝑎𝑡𝑛𝑑𝑟𝑡𝑒 is percent classes attended,
+𝑝𝑟𝑖𝐺𝑃𝐴 is cumulative GPA prior to term, and 𝐴𝐶𝑇 is the ACT score.
+
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_Repos/Econometrics/Problem Set #2")
+
+#load in Attend txt data set for the exercise
+attend <- read.table("attend.txt")
+
+attach(attend)
+
+```
+```{r}
+#atndrte
+max_atndrte= max(V6)
+min_atndrte= min(V6)
+mean_atndrte= mean(V6)
+
+
+#priGPA
+max_priGPA = max(V3)
+min_priGPA = min(V3)
+mean_prGPA = mean(V3)
+
+#ACT
+max_ACT = max(V4)
+min_ACT = min(V4)
+mean_ACT = mean(V4)
+print(max_ACT)
+
+
+```
+The maximum percent classes attended was 100% while the minimum percent classes attended was 6.25%. The average percent of class attendance was 81.71%. 
+
+The maximum cumulative GPA prior was 3.93 while the minimum GPA was 0.857. The average GPA for the class prior to the term was 2.59%
+
+The maximum ACT score was 32 while the minimum ACT score was 13. The average ACT score of the class was 22.51%
+
+
+
+
+(ii) Estimate the model
+𝑎𝑡𝑛𝑑𝑟𝑡𝑒 = 𝛽0 + 𝛽1 𝑝𝑟𝑖𝐺𝑃𝐴 + 𝛽2 𝐴𝐶𝑇 + 𝑢,
+and write the results in equation form. Interpret the intercept. Does it have a
+useful meaning?
+```{r}
+model = lm(attend$V6~attend$V3 + attend$V4)
+summary(model)
+
+```
+The equation form is given by atndrte = 75.7 + 17.261(priGPA) - 1.717(ACT). The intercept means that given a GPA of 0 and ACT score of 0 students attend 75.7% of classes. 
+
+
+(iii) Interpret the estimated slope coefficients. Are there any surprises?
+
+Something that was surprising about the produced model is that ACT score decreased the school attendance. Generally, one would expect that someone that attends more class would acquire a better score on the ACT exam
+
+
+(iv) What is the predicted 𝑎𝑡𝑛𝑑𝑟𝑡𝑒 if priGPA = 3.65 and ACT = 20? What do you
+make of this result? Are there any students in the sample with these values of
+the explanatory variables?
+```{r}
+similar_ACT = nrow(subset(attend, V3==3.65))
+similar_GPA = nrow(subset(attend, V4==20))
+
+```
+
+The predicted value of atndrte was 104.36265 which, technically, should be above the amount of classes possible to attend. There is about 1 student with the same GPA, but 71 students with a similar SAT
+
+(v) If Student A has priGPA = 3.1 and ACT = 21 and Student B has priGPA = 2.1
+and ACT = 26, what is the predicted difference in their attendance rates?
+
+The student with a priGPA = 3.1 and ACT of 21 was found to have attendance percentage of 93.1521% while the student with priGPA = 2.1 and ACT = 26 had an attendance percentage of 25.846%. The predicted difference in the two attence rates is 25.846%
+
+
+5. Use the data in HPRICE1.TXT to estimate the model
+
+price=〖β_0+β〗_1 sqrft+β_2 bdrms+u,
+
+where price is the house price in thousands of dollars.
+
+
+```{r}
+hprice1 <- read.table("hprice1.txt")
+
+attach(hprice1)
+price = V1 
+sqrtft = V5
+bdrms = V3
+model = lm(price ~ sqrtft + bdrms)
+summary(model)
+```
+The predictive modeled equation is defined as Price = 15.46631 - 0.02178(Sqrft) + 4.34699(bdrms)
+
+(iii)	What is the estimated increase in price for a house with an additional bedroom that is 140 square feet in size? Compare this to your answer in part (ii).
+```{r}
+x_1 = predict(model, data.frame(bdrms = 2, sqrtft = 140))
+x_2 = predict(model, data.frame(bdrms = 3, sqrtft = 140))
+x_2 - x_1 
+```
+The estimated increase in price for a house with an additional bedroom that is 140 sqrft in size is $4346.98. This is the same as the price increase found from the coefficient in the previous equation as the square footage is independent of the increase in price from the increase in the number of berooms.
+
+(v)	The first house in the sample has sqrft = 2,438 and bdrms = 4. Find the predicted selling price for this home from the OLS regression line.
+```{r}
+predict(model, data.frame(bdrms = 4, sqrtft = 2438))
+```
+The house is predicted to have a selling price of -$20245.37 which is an impossible price to sell a house for. 
+
+(vi)	The actual selling price of the first house in the sample was $300,000 (so price = 300). Find the residual for this house. Does it suggest that the buyer underpaid or overpaid for the house? 
+```{r}
+residual = 300 - 354.6052
+
+```
+
+
+6. Use the data set in WAGE2.TXT for this problem. As usual, be sure all of the following
+regressions contain an intercept.
+
+(i) Run a simple regression of IQ on educ to obtain the slope coefficient, say,𝛿̃
+```{r}
+wage2 <- read.table("wage2.txt")
+
+attach(wage2)
+IQ = V3 
+education = V5 
+model1 = lm(IQ ~ education)
+summary(model1)
+```
+```{r}
+wage = V1
+model2 = lm(log(wage) ~ education)
+summary(model2)
+```
+```{r}
+model3 = lm(log(wage) ~ IQ + education)
+summary(model3)
+```
+

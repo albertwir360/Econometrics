@@ -1,0 +1,57 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_Repos/Econometrics/Problem Set #3")
+
+#load in Attend txt data set for the exercise
+vote1 <- read.table("vote1.txt")
+
+attach(vote1)
+
+voteA = V4
+expendA = V5
+expendB = V6
+prtystrA = V7
+model1 = lm(voteA ~ log(expendA) + log(expendB) + prtystrA)
+summary(model1)
+
+model2 = 
+```
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_Repos/Econometrics/Problem Set #3")
+
+#load in Attend txt data set for the exercise
+wage2 <- read.table("wage2.txt")
+
+attach(wage2)
+
+educ = V5
+exper = V6
+tenure = V7
+wage = V1
+mod = lm(log(wage) ~ educ + exper + tenure)
+summary(mod)
+```
+
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_Repos/Econometrics/Problem Set #3")
+
+#load in Attend txt data set for the exercise
+ksubs401 <- read.table("401ksubs.txt")
+
+attach(ksubs401)
+
+new_data = subset(ksubs401, fsize=='1')
+nettfa = V7 
+age = V5
+inc =V2
+fsize = V6
+mod = lm(new_data$V7 ~ new_data$V2 )
+summary(mod)
+
+```
+

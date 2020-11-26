@@ -1,0 +1,66 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_Repos/Econometrics/Problem Set #4")
+
+#load in Attend txt data set for the exercise
+wage1 = read.table("wage1.txt")
+
+attach(wage1)
+wage = V1 
+educ = V2
+exper = V3
+
+model = lm(log(wage) ~ educ + exper + I(exper^2))
+summary(model)
+coefficients(model)
+```
+
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_Repos/Econometrics/Problem Set #4")
+
+#load in Attend txt data set for the exercise
+meap1 = read.table("meap01.txt")
+
+attach(meap1)
+
+lexppp = V11
+lenroll = V9
+lunch = V5
+math4 = V3
+sd(math4)
+sd(lexppp)
+sd(lenroll)
+sd(lunch)
+mod = lm(math4 / sd(math4) ~ lexppp  + lenroll  +lunch )
+summary(mod)
+max(math4)
+min(math4)
+max(lenroll)
+min(lenroll)
+max(lunch)
+min(lunch)
+max(lexppp)
+min(lexppp)
+
+min = 46.1953 + 8.5341*min(lexppp)-4.8396*max(lenroll)-0.4714*max(lunch)
+max = 46.1953 + 8.5341*max(lexppp)-4.8396*min(lenroll)-0.4714*min(lunch)
+0.4276876/sd(lexppp)
+-0.2425370/ sd(lenroll)
+-0.0236233/sd(lunch)
+```
+
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_Repos/Econometrics/Problem Set #4")
+
+#load in Attend txt data set for the exercise
+wage2 = read.table("wage2.txt")
+
+attach(wage2)
+
+29448
+summary(mod)
+```
+

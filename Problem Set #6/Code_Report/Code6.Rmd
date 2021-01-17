@@ -1,0 +1,67 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Problem #3 
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_GitRepos/Fall_2020/Econometrics/Problem Set #6/data")
+hprice1 =  read.table("hprice1.txt")
+
+attach(hprice1)
+lotsize = V4
+sqrft = V5
+bdrms = V3
+price = V1
+
+model = lm(log(price) ~ log(lotsize) + log(sqrft) + bdrms)
+summary(model)
+
+model2 = hccm(model, type = "hc1")
+mod.HC1 = coeftest(model, vcov.=model2)
+mod.HC1
+
+```
+Problem #4
+```{r}
+setwd("/Users/albertwiryawan/Code/Class_GitRepos/Fall_2020/Econometrics/Problem Set #6/data")
+vote1 =  read.table("vote1.txt")
+
+attach(vote1)
+voteA = V4
+prtystrA = V7
+democA = V3
+expendA = V5
+expendB = V6
+
+model = lm(voteA ~ prtystrA + democA + log(expendA) +log(expendB))
+residuals = residuals(model)
+model1 = lm(residuals ~ prtystrA + democA + log(expendA) +log(expendB))
+
+summary(model1)
+bptest(model, model)
+```
+
+Problem #5
+```{r}
+
+setwd("/Users/albertwiryawan/Code/Class_GitRepos/Fall_2020/Econometrics/Problem Set #6/data")
+meap01 =  read.table("meap01.txt")
+
+attach(meap01)
+
+math4 = V3
+lunch = V5
+enroll = V6 
+exppp = V7
+model = lm(math4 ~ lunch + log(enroll) + log(exppp))
+summary(model)
+
+model2 = hccm(model, type = "hc1")
+mod.HC1 = coeftest(model, vcov.=model2)
+mod.HC1
+
+
+white_lm(model)
+```
+
